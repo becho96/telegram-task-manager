@@ -101,8 +101,25 @@ class TaskManager {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.style.display = 'none';
+                    // Restore body scroll when closing modal
+                    document.body.style.overflow = '';
                 }
             });
+        });
+        
+        // Handle Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close any open modal
+                const taskModal = document.getElementById('task-modal');
+                const detailsModal = document.getElementById('task-details-modal');
+                
+                if (taskModal.style.display === 'block') {
+                    this.closeTaskModal();
+                } else if (detailsModal.style.display === 'block') {
+                    this.closeTaskDetailsModal();
+                }
+            }
         });
     }
 
@@ -141,11 +158,25 @@ class TaskManager {
         }
         
         modal.style.display = 'block';
+        
+        // Scroll to top of modal on mobile
+        setTimeout(() => {
+            const modalBody = modal.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+            }
+        }, 100);
+        
+        // Prevent body scroll on mobile
+        document.body.style.overflow = 'hidden';
     }
 
     closeTaskModal() {
         document.getElementById('task-modal').style.display = 'none';
         this.currentEditingTask = null;
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
     }
 
     openTaskDetailsModal(task) {
@@ -180,10 +211,24 @@ class TaskManager {
         `;
         
         modal.style.display = 'block';
+        
+        // Scroll to top of modal on mobile
+        setTimeout(() => {
+            const modalBody = modal.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+            }
+        }, 100);
+        
+        // Prevent body scroll on mobile
+        document.body.style.overflow = 'hidden';
     }
 
     closeTaskDetailsModal() {
         document.getElementById('task-details-modal').style.display = 'none';
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
     }
 
     populateTaskForm(task) {
