@@ -159,11 +159,22 @@ class TaskManager {
         
         modal.style.display = 'block';
         
-        // Scroll to top of modal on mobile
+        // Force modal to be scrollable
         setTimeout(() => {
             const modalBody = modal.querySelector('.modal-body');
             if (modalBody) {
                 modalBody.scrollTop = 0;
+                // Add force-scroll class
+                modalBody.classList.add('force-scroll');
+                // Force scroll to be enabled
+                modalBody.style.overflowY = 'auto';
+                modalBody.style.webkitOverflowScrolling = 'touch';
+                modalBody.style.maxHeight = 'calc(100vh - 200px)';
+                
+                // Ensure content is scrollable
+                if (modalBody.scrollHeight > modalBody.clientHeight) {
+                    modalBody.style.overflowY = 'auto';
+                }
             }
         }, 100);
         
@@ -172,8 +183,15 @@ class TaskManager {
     }
 
     closeTaskModal() {
-        document.getElementById('task-modal').style.display = 'none';
+        const modal = document.getElementById('task-modal');
+        modal.style.display = 'none';
         this.currentEditingTask = null;
+        
+        // Remove force-scroll class
+        const modalBody = modal.querySelector('.modal-body');
+        if (modalBody) {
+            modalBody.classList.remove('force-scroll');
+        }
         
         // Restore body scroll
         document.body.style.overflow = '';
@@ -217,6 +235,9 @@ class TaskManager {
             const modalBody = modal.querySelector('.modal-body');
             if (modalBody) {
                 modalBody.scrollTop = 0;
+                // Force scroll to be enabled
+                modalBody.style.overflowY = 'auto';
+                modalBody.style.webkitOverflowScrolling = 'touch';
             }
         }, 100);
         

@@ -765,6 +765,8 @@ body {
     overflow-y: auto;
     flex: 1;
     max-height: calc(100vh - 200px);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
 }
 
 .modal-footer {
@@ -835,6 +837,8 @@ body {
     .modal-body {
         max-height: calc(100vh - 150px);
         padding: 1rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .modal-footer {
@@ -874,6 +878,8 @@ body {
     .modal-body {
         max-height: calc(100vh - 120px);
         padding: 0.75rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .modal-footer {
@@ -1048,6 +1054,13 @@ body {
 .btn-danger:hover {
     background: #c82333;
     transform: translateY(-1px);
+}
+
+/* Force scroll for modals */
+.modal-body.force-scroll {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: calc(100vh - 200px) !important;
 }
 
 /* Focus styles for accessibility */
